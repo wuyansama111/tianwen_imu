@@ -29,9 +29,9 @@ void IIC_Start(void)
 	SDA_OUT();
 	SDA(1);
 	SCL(1); 
-	vTaskDelay(4);
+	delay_us(4);
 	SDA(0);
-	vTaskDelay(4);
+	delay_us(4);
 	SCL(0);
 	       
 }
@@ -41,10 +41,10 @@ void IIC_Stop(void)
 	SDA_OUT();
 	SCL(0);
 	SDA(0);
-	vTaskDelay(4);
+	delay_us(4);
 	SCL(1);
 	SDA(1);
-	vTaskDelay(4);
+	delay_us(4);
 }
 //发送非应答
 void IIC_NAck(void)
@@ -53,9 +53,9 @@ void IIC_NAck(void)
 	SCL(0);
 	SDA_OUT();
 	SDA(1);
-	vTaskDelay(2);
+	delay_us(2);
 	SCL(1);
-	vTaskDelay(2);
+	delay_us(2);
 	SCL(0);
 }
 //发送应答
@@ -64,9 +64,9 @@ void IIC_Ack(void)
 	SCL(0);
 	SDA_OUT();
 	SDA(0);
-	vTaskDelay(2);
+	delay_us(2);
 	SCL(1);
-	vTaskDelay(2);
+	delay_us(2);
 	SCL(0);
 }
 
@@ -82,8 +82,8 @@ uint8_t IIC_Wait_Ack(void)
 {
 	uint8_t ucErrTime=0;
 	SDA_IN();      //SDA设置为输入  
-	SDA(1);vTaskDelay(1);	   
-	SCL(1);vTaskDelay(1);	 
+	SDA(1);delay_us(1);	   
+	SCL(1);delay_us(1);	 
 	while(SDA_GET())
 	{
 		ucErrTime++;
@@ -107,11 +107,11 @@ void IIC_Send_Byte(uint8_t txd)
     {              
       SDA((txd&0x80)>>7);
       txd<<=1; 	  
-	  vTaskDelay(2);   
+	  delay_us(2);   
 	  SCL(1);
-	  vTaskDelay(2); 
+	  delay_us(2); 
 	  SCL(0);	
-	  vTaskDelay(2);
+	  delay_us(2);
     }	 
 } 	
 
@@ -122,11 +122,11 @@ uint8_t IIC_Read_Byte(unsigned char ack)
     for(i=0;i<8;i++ )
 	{	
       SCL(0); 
-      vTaskDelay(2);
+      delay_us(2);
 	  SCL(1);
       receive<<=1;
       if(SDA_GET())receive++;   
-		  vTaskDelay(1); 
+		  delay_us(1); 
 	}					 
     if (!ack)
         IIC_NAck();//发送nACK
