@@ -1,0 +1,17 @@
+"position":"primary_seat",
+"primary_seat":{
+    "ui_window_main":1,
+    "ui_window_airline":3,
+    "ui_window_order":2
+},
+"secondary_seat":{
+    "ui_window_main":1,
+    "ui_window_airline":1,
+    "ui_window_order":1
+},
+"heartbeat_cycle":100,
+"version":"2.07ZB",
+"gis_url":"http://127.0.0.1:8888",
+"command":{
+    
+}
