@@ -4,40 +4,40 @@
 
 void usart_gpio_config(uint32_t band_rate)
 {
-  /* ¿ªÆôÊ±ÖÓ */
+  /* å¼€å¯æ—¶é’Ÿ */
 	rcu_periph_clock_enable(BSP_USART_TX_RCU); 
 	rcu_periph_clock_enable(BSP_USART_RX_RCU); 
 	rcu_periph_clock_enable(BSP_USART_RCU); 
 	
-	/* ÅäÖÃGPIO¸´ÓÃ¹¦ÄÜ */
+	/* é…ç½®GPIOå¤ç”¨åŠŸèƒ½ */
   gpio_af_set(BSP_USART_TX_PORT,BSP_USART_AF,BSP_USART_TX_PIN);	
 	gpio_af_set(BSP_USART_RX_PORT,BSP_USART_AF,BSP_USART_RX_PIN);	
 	
-	/* ÅäÖÃGPIOµÄÄ£Ê½ */
-	/* ÅäÖÃTXÎª¸´ÓÃÄ£Ê½ ÉÏÀ­Ä£Ê½ */
+	/* é…ç½®GPIOæ¨¡å¼ */
+	/* ä¸Šæ‹‰*/
 	gpio_mode_set(BSP_USART_TX_PORT,GPIO_MODE_AF,GPIO_PUPD_PULLUP,BSP_USART_TX_PIN);
-	/* ÅäÖÃRXÎª¸´ÓÃÄ£Ê½ ÉÏÀ­Ä£Ê½ */
+	/* rxä¸Šæ‹‰Ê½ */
 	gpio_mode_set(BSP_USART_RX_PORT, GPIO_MODE_AF,GPIO_PUPD_PULLUP,BSP_USART_RX_PIN);
 	
-	/* ÅäÖÃTXÎªÍÆÍìÊä³ö 50MHZ */
+	/* TX50MHz */
 	gpio_output_options_set(BSP_USART_TX_PORT,GPIO_OTYPE_PP,GPIO_OSPEED_50MHZ,BSP_USART_TX_PIN);
-	/* ÅäÖÃRXÎªÍÆÍìÊä³ö 50MHZ */
+	/* RX 50MHZ */
 	gpio_output_options_set(BSP_USART_RX_PORT,GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, BSP_USART_RX_PIN);
 
-	/* ÅäÖÃ´®¿ÚµÄ²ÎÊı */
+	/* ä¸²å£å‚æ•° */
 	usart_deinit(BSP_USART);
 	usart_baudrate_set(BSP_USART,band_rate);
 	usart_parity_config(BSP_USART,USART_PM_NONE);
 	usart_word_length_set(BSP_USART,USART_WL_8BIT);
 	usart_stop_bit_set(BSP_USART,USART_STB_1BIT);
 
-  /* Ê¹ÄÜ´®¿Ú */
+  /* ä½¿èƒ½ */
 	usart_enable(BSP_USART);
 	usart_transmit_config(BSP_USART,USART_TRANSMIT_ENABLE);
 	
 }
 
-/* ·¢ËÍº¯Êı */
+/* å‘é€å‡½æ•° */
 void usart_send_data(uint8_t ucch)
 {
 	usart_data_transmit(BSP_USART,(uint8_t)ucch);
@@ -45,7 +45,7 @@ void usart_send_data(uint8_t ucch)
 }
 
 
-/* ´®¿Ú·¢ËÍ×Ö·û´® */
+/* ä¸²å£å‘é€å­—ç¬¦ä¸² */
 void usart_send_string(uint8_t *ucstr)
 {
 	while(ucstr && *ucstr)
@@ -57,6 +57,6 @@ void usart_send_string(uint8_t *ucstr)
 int fputc(int ch, FILE *f)
 {
      usart_send_data(ch);
-     // µÈ´ı·¢ËÍÊı¾İ»º³åÇø±êÖ¾ÖÃÎ»
+     // ç­‰å¾…å‘é€æ•°æ®ç¼“å†²åŒºæ ‡å¿—ä½
      return ch;
 }
