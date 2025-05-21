@@ -1,6 +1,6 @@
 #include "imu.h"
 
-
+//author :shorec
 void imu_init(void)//初始化函数，应在线程函数中初始化
 {
 	IIC_Write_1Byte(0x69,0x7F,0x02);//初始化
@@ -21,6 +21,8 @@ static int read_dreg(uint8_t slave ,uint8_t reg, uint32_t len, uint8_t *buf)//�
 int inv_imu_get_register_data(icm45686_sensor_data *data)//解包大端通信
 {
 	int status = INV_IMU_OK;
+	
+
 	uint8_t buf[sizeof(icm45686_sensor_data)];
 	status |= read_dreg(icm45686_slave_adress, icm45686_reg_adress, sizeof(icm45686_sensor_data),buf);
 	data->accel_data[0]=(int16_t)buf[0]|(buf[1]<<8);
